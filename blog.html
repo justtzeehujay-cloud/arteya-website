@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Arteya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --pastel-green: #a8e6cf;
+            --pastel-blue: #b8e0f6;
+            --pastel-pink: #ffd3e8;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --text-light: #f5f5f7;
+            --text-muted: #a1a1a6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--dark-card);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 5px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--pastel-green);
+            line-height: 1;
+        }
+
+        .tagline {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--pastel-blue);
+        }
+
+        nav ul li a.active {
+            color: var(--pastel-pink);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--pastel-pink);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after, nav ul li a.active::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--pastel-pink);
+            color: var(--dark-bg);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 60px 0 40px;
+            text-align: center;
+            background-color: var(--dark-card);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Blog Grid */
+        .featured {
+            padding: 80px 0;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background-color: var(--dark-card);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-info {
+            padding: 20px;
+        }
+
+        .blog-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--pastel-green);
+        }
+
+        .blog-excerpt {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            background-color: var(--pastel-blue);
+            color: var(--dark-bg);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+        }
+
+        .read-more:hover {
+            background-color: var(--pastel-pink);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--pastel-green), var(--pastel-blue));
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Blog Post Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: var(--dark-card);
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--pastel-pink);
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--pastel-green);
+        }
+
+        .modal-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .modal-body {
+            line-height: 1.7;
+            color: var(--text-light);
+        }
+
+        .modal-body p {
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-card);
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--pastel-green);
+        }
+
+        .footer-column p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--pastel-blue);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--dark-bg);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--pastel-pink);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .brand {
+                margin-bottom: 15px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                margin: 20px auto;
+                padding: 20px;
+            }
+        }
+		/* Bright White Falling Stars */
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.star {
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 50%;
+    animation: fall linear infinite;
+    opacity: 0.9;
+    box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.9);
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Make sure content stays above stars */
+header, section, footer {
+    position: relative;
+    z-index: 2;
+}
+
+body {
+    overflow-x: hidden;
+    position: relative;
+}
+    </style>
+</head>
+<body>
+<!-- Star Container -->
+<div class="stars-container" id="starsContainer"></div>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <img src="Picture7.jpg" alt="Arteya Logo" class="logo">
+                    <div class="brand-text">
+                        <a href="index.html" class="brand-name">Arteya</a>
+                        <div class="tagline">Where Your Art Is Born !</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="artists.html">Artists</a></li>
+                        <li><a href="artworks.html">Artworks</a></li>
+                        <li><a href="blog.html" class="active">Blog</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li class="cart-icon" id="cartIcon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cartCount">0</span>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Art Blog & Insights</h1>
+            <p>Discover art techniques, artist interviews, collection guides, and inspiration for your creative journey.</p>
+        </div>
+    </section>
+
+    <!-- Blog Grid -->
+    <section class="featured">
+        <div class="container">
+            <h2 class="section-title">Latest Articles</h2>
+            <div class="blog-grid">
+                <!-- Blog Post 1 -->
+                <div class="blog-card">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.kwBx1rRQgQH1k_rq4pNalAHaHa?cb=ucfimgc2&w=800&h=800&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Abstract Art Techniques" class="blog-img">
+                    <div class="blog-info">
+                        <h3 class="blog-title">Mastering Abstract Art: 10 Techniques for Beginners</h3>
+                        <p class="blog-excerpt">Learn the fundamental techniques that will help you create compelling abstract artworks that express emotion and movement.</p>
+                        <div class="blog-meta">
+                            <span>June 15, 2023</span>
+                            <span>10 min read</span>
+                        </div>
+                        <button class="read-more" data-post="1">Read More</button>
+                    </div>
+                </div>
+                
+                <!-- Blog Post 2 -->
+                <div class="blog-card">
+                    <img src="https://c.stocksy.com/a/dSl700/z9/1850739.jpg" alt="Artist Interview" class="blog-img">
+                    <div class="blog-info">
+                        <h3 class="blog-title">Interview with Elena Rodriguez: Finding Inspiration in Nature</h3>
+                        <p class="blog-excerpt">We sit down with acclaimed artist Elena Rodriguez to discuss her creative process and how nature influences her vibrant abstract works.</p>
+                        <div class="blog-meta">
+                            <span>June 8, 2023</span>
+                            <span>12 min read</span>
+                        </div>
+                        <button class="read-more" data-post="2">Read More</button>
+                    </div>
+                </div>
+                
+                <!-- Blog Post 3 -->
+                <div class="blog-card">
+                    <img src="https://archi-dome.com/wp-content/uploads/2024/05/263.jpg" alt="Art Collection" class="blog-img">
+                    <div class="blog-info">
+                        <h3 class="blog-title">How to Start Your Art Collection: A Beginner's Guide</h3>
+                        <p class="blog-excerpt">Thinking about starting an art collection? Here's everything you need to know about buying your first pieces and building a meaningful collection.</p>
+                        <div class="blog-meta">
+                            <span>June 1, 2023</span>
+                            <span>8 min read</span>
+                        </div>
+                        <button class="read-more" data-post="3">Read More</button>
+                    </div>
+                </div>
+                
+                <!-- Blog Post 4 -->
+                <div class="blog-card">
+                    <img src="https://mypixeler.com/wp-content/uploads/2024/06/close-up-woman-holding-color-palette.jpg" alt="Color Theory" class="blog-img">
+                    <div class="blog-info">
+                        <h3 class="blog-title">Color Theory Essentials for Visual Artists</h3>
+                        <p class="blog-excerpt">Understanding color theory can transform your artwork. Explore the fundamentals of color relationships and how to use them effectively.</p>
+                        <div class="blog-meta">
+                            <span>May 25, 2023</span>
+                            <span>15 min read</span>
+                        </div>
+                        <button class="read-more" data-post="4">Read More</button>
+                    </div>
+                </div>
+                
+                <!-- Blog Post 5 -->
+                <div class="blog-card">
+                    <img src="https://blog.tubikstudio.com/wp-content/uploads/2019/12/koi-power-illustration.png" alt="Digital Art" class="blog-img">
+                    <div class="blog-info">
+                        <h3 class="blog-title">The Rise of Digital Art: Tools and Techniques</h3>
+                        <p class="blog-excerpt">Digital art is revolutionizing the creative world. Discover the best tools and techniques for creating stunning digital artworks.</p>
+                        <div class="blog-meta">
+                            <span>May 18, 2023</span>
+                            <span>11 min read</span>
+                        </div>
+                        <button class="read-more" data-post="5">Read More</button>
+                    </div>
+                </div>
+                
+                <!-- Blog Post 6 -->
+                <div class="blog-card">
+                    <img src="https://www.nerdwallet.com/assets/blog/wp-content/uploads/2021/04/GettyImages-539434591-1920x1152.jpg" alt="Art Business" class="blog-img">
+                    <div class="blog-info">
+                        <h3 class="blog-title">Turning Your Art into a Business: A Practical Guide</h3>
+                        <p class="blog-excerpt">Learn how to market your artwork, price your pieces, and build a sustainable career as a professional artist.</p>
+                        <div class="blog-meta">
+                            <span>May 11, 2023</span>
+                            <span>14 min read</span>
+                        </div>
+                        <button class="read-more" data-post="6">Read More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Post Modal -->
+    <div class="modal" id="blogModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2 class="modal-title" id="modalTitle">Blog Post Title</h2>
+            <div class="modal-meta">
+                <span id="modalDate">Date</span>
+                <span id="modalReadTime">Read Time</span>
+            </div>
+            <img id="modalImage" src="" alt="Blog Image" class="modal-img">
+            <div class="modal-body" id="modalBody">
+                <!-- Blog content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Arteya</h3>
+                    <p>Where your art is born. We provide premium art supplies for passionate creators.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li><a href="shop.html">Paints</a></li>
+                        <li><a href="shop.html">Canvases</a></li>
+                        <li><a href="shop.html">Brushes</a></li>
+                        <li><a href="shop.html">Easels</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="careers.html">Careers</a></li>
+                        <li><a href="press.html">Press</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="shipping.html">Shipping</a></li>
+                        <li><a href="returns.html">Returns</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Arteya. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartCount = document.getElementById('cartCount');
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            if (cartCount) {
+                cartCount.textContent = totalItems;
+            }
+
+            // Blog post functionality
+            const readMoreButtons = document.querySelectorAll('.read-more');
+            const modal = document.getElementById('blogModal');
+            const closeModal = document.getElementById('closeModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDate = document.getElementById('modalDate');
+            const modalReadTime = document.getElementById('modalReadTime');
+            const modalImage = document.getElementById('modalImage');
+            const modalBody = document.getElementById('modalBody');
+
+            // Blog post data
+            const blogPosts = {
+                1: {
+                    title: "Mastering Abstract Art: 10 Techniques for Beginners",
+                    date: "June 15, 2023",
+                    readTime: "10 min read",
+                    image: "https://tse1.mm.bing.net/th/id/OIP.kwBx1rRQgQH1k_rq4pNalAHaHa?cb=ucfimgc2&w=800&h=800&rs=1&pid=ImgDetMain&o=7&rm=3",
+                    content: `
+                        <p>Abstract art can seem intimidating to beginners, but with the right techniques, anyone can create compelling abstract works. Here are 10 fundamental techniques to get you started:</p>
+                        
+                        <h3>1. Gestural Drawing</h3>
+                        <p>Start with loose, expressive marks that capture the energy of your subject rather than its exact form. Use your whole arm, not just your wrist, to create fluid, sweeping lines.</p>
+                        
+                        <h3>2. Color Field Painting</h3>
+                        <p>Focus on large areas of flat color to create mood and atmosphere. Experiment with color relationships and how they affect the viewer's emotional response.</p>
+                        
+                        <h3>3. Collage and Mixed Media</h3>
+                        <p>Incorporate different materials like paper, fabric, or found objects into your artwork. This adds texture and visual interest to your compositions.</p>
+                        
+                        <p>Continue practicing these techniques and soon you'll develop your own unique abstract style that expresses your artistic vision.</p>
+                    `
+                },
+                2: {
+                    title: "Interview with Elena Rodriguez: Finding Inspiration in Nature",
+                    date: "June 8, 2023",
+                    readTime: "12 min read",
+                    image: "https://c.stocksy.com/a/dSl700/z9/1850739.jpg",
+                    content: `
+                        <p>We recently had the pleasure of sitting down with acclaimed artist Elena Rodriguez to discuss her creative process and how nature influences her vibrant abstract works.</p>
+                        
+                        <h3>Finding Inspiration in the Natural World</h3>
+                        <p>"Nature has always been my greatest teacher," Elena explains. "The way light filters through leaves, the patterns in tree bark, the colors of a sunset - these are all starting points for my work."</p>
+                        
+                        <p>Elena's process begins with observation. She spends hours in natural settings, sketching and taking photographs. Back in her studio, she translates these observations into abstract compositions that capture the essence rather than the exact appearance of her subjects.</p>
+                        
+                        <h3>The Creative Process</h3>
+                        <p>"I work intuitively," she says. "I might start with a color palette inspired by a particular landscape, then let the painting evolve organically. The final piece often surprises me - it's a conversation between my intentions and the materials themselves."</p>
+                        
+                        <p>Elena's advice to aspiring artists: "Spend time in nature without any agenda. Just observe. The inspiration will come naturally."</p>
+                    `
+                },
+                3: {
+                    title: "How to Start Your Art Collection: A Beginner's Guide",
+                    date: "June 1, 2023",
+                    readTime: "8 min read",
+                    image: "https://archi-dome.com/wp-content/uploads/2024/05/263.jpg",
+                    content: `
+                        <p>Starting an art collection can seem daunting, but it's one of the most rewarding journeys you can embark on. Here's a practical guide to help you begin.</p>
+                        
+                        <h3>Define Your Taste</h3>
+                        <p>Before buying anything, spend time exploring different art styles, periods, and mediums. Visit galleries, museums, and art fairs. Follow artists on social media. Pay attention to what resonates with you emotionally.</p>
+                        
+                        <h3>Set a Budget</h3>
+                        <p>Art collecting doesn't have to break the bank. Set a realistic budget for your first purchase. Remember to account for framing and any potential shipping costs.</p>
+                        
+                        <h3>Start Small</h3>
+                        <p>Begin with smaller works or prints by emerging artists. These are often more affordable and can be a great way to start building a collection without a huge financial commitment.</p>
+                        
+                        <h3>Buy What You Love</h3>
+                        <p>The most important rule of art collecting: buy pieces that speak to you personally. Don't worry about trends or investment potential. If you love a piece, it will bring you joy for years to come.</p>
+                    `
+                },
+                4: {
+                    title: "Color Theory Essentials for Visual Artists",
+                    date: "May 25, 2023",
+                    readTime: "15 min read",
+                    image: "https://mypixeler.com/wp-content/uploads/2024/06/close-up-woman-holding-color-palette.jpg",
+                    content: `
+                        <p>Understanding color theory is fundamental for any visual artist. It's the foundation that allows you to create harmonious compositions and convey specific moods in your work.</p>
+                        
+                        <h3>The Color Wheel</h3>
+                        <p>The color wheel is your primary tool for understanding color relationships. It consists of primary colors (red, blue, yellow), secondary colors (created by mixing primaries), and tertiary colors (mixtures of primary and secondary colors).</p>
+                        
+                        <h3>Color Harmony</h3>
+                        <p>Different color schemes create different effects:</p>
+                        <ul>
+                            <li><strong>Complementary:</strong> Colors opposite each other on the wheel create high contrast and vibrancy.</li>
+                            <li><strong>Analogous:</strong> Colors next to each other create harmonious, serene compositions.</li>
+                            <li><strong>Triadic:</strong> Three colors evenly spaced on the wheel create dynamic, balanced palettes.</li>
+                        </ul>
+                        
+                        <h3>Color Temperature</h3>
+                        <p>Warm colors (reds, oranges, yellows) tend to advance in a composition, while cool colors (blues, greens, purples) tend to recede. Use this knowledge to create depth in your work.</p>
+                        
+                        <p>Experiment with these concepts in your next piece and notice how they transform your artistic expression.</p>
+                    `
+                },
+                5: {
+                    title: "The Rise of Digital Art: Tools and Techniques",
+                    date: "May 18, 2023",
+                    readTime: "11 min read",
+                    image: "https://blog.tubikstudio.com/wp-content/uploads/2019/12/koi-power-illustration.png",
+                    content: `
+                        <p>Digital art has revolutionized the creative world, opening up new possibilities for artists everywhere. Whether you're a beginner or a seasoned professional, there's never been a better time to explore digital creation.</p>
+                        
+                        <h3>Essential Tools</h3>
+                        <p>The basic setup for digital art includes:</p>
+                        <ul>
+                            <li>A computer or tablet with sufficient processing power</li>
+                            <li>A graphics tablet or display tablet</li>
+                            <li>Digital art software like Photoshop, Procreate, or Clip Studio Paint</li>
+                        </ul>
+                        
+                        <h3>Fundamental Techniques</h3>
+                        <p>While digital art shares many principles with traditional media, it also offers unique capabilities:</p>
+                        <ul>
+                            <li><strong>Layers:</strong> Work on different elements separately for greater control</li>
+                            <li><strong>Undo/Redo:</strong> Experiment fearlessly with the safety net of unlimited undos</li>
+                            <li><strong>Digital Brushes:</strong> Access an infinite variety of brushes and textures</li>
+                        </ul>
+                        
+                        <h3>Blending Traditional and Digital</h3>
+                        <p>Many artists now work in hybrid approaches, creating traditional works and then enhancing or manipulating them digitally. This approach combines the tactile quality of physical media with the flexibility of digital tools.</p>
+                    `
+                },
+                6: {
+                    title: "Turning Your Art into a Business: A Practical Guide",
+                    date: "May 11, 2023",
+                    readTime: "14 min read",
+                    image: "https://www.nerdwallet.com/assets/blog/wp-content/uploads/2021/04/GettyImages-539434591-1920x1152.jpg",
+                    content: `
+                        <p>Transitioning from creating art as a hobby to building a sustainable business requires strategy and planning. Here's how to approach this exciting journey.</p>
+                        
+                        <h3>Developing Your Brand</h3>
+                        <p>Your artistic style is your brand. Consistently develop and refine your unique visual language. Create a cohesive body of work that represents your artistic vision.</p>
+                        
+                        <h3>Pricing Your Work</h3>
+                        <p>Pricing art can be challenging. Consider these factors:</p>
+                        <ul>
+                            <li>Cost of materials and time</li>
+                            <li>Your experience and reputation</li>
+                            <li>Comparable prices for similar work in your market</li>
+                            <li>Gallery commission if applicable (typically 30-50%)</li>
+                        </ul>
+                        
+                        <h3>Marketing and Sales Channels</h3>
+                        <p>Diversify your approach to reach potential buyers:</p>
+                        <ul>
+                            <li>Online platforms like Etsy, Shopify, or your own website</li>
+                            <li>Local galleries and art fairs</li>
+                            <li>Social media marketing (Instagram is particularly visual-friendly)</li>
+                            <li>Commission work for clients</li>
+                        </ul>
+                        
+                        <h3>Building Relationships</h3>
+                        <p>Networking is crucial in the art world. Connect with other artists, gallery owners, and collectors. Attend openings and art events. Building genuine relationships often leads to opportunities.</p>
+                        
+                        <p>Remember that building an art business takes time. Stay true to your artistic vision while being strategic about your business decisions.</p>
+                    `
+                }
+            };
+
+            // Add click event to each read more button
+            readMoreButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const postId = this.getAttribute('data-post');
+                    const post = blogPosts[postId];
+                    
+                    if (post) {
+                        modalTitle.textContent = post.title;
+                        modalDate.textContent = post.date;
+                        modalReadTime.textContent = post.readTime;
+                        modalImage.src = post.image;
+                        modalBody.innerHTML = post.content;
+                        
+                        modal.style.display = 'block';
+                        document.body.style.overflow = 'hidden'; // Prevent scrolling
+                    }
+                });
+            });
+
+            // Close modal when clicking the X
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
+            });
+
+            // Close modal when clicking outside the content
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto'; // Re-enable scrolling
+                }
+            });
+        });
+    </script>
+	<script>
+	// Bright White Falling Stars
+function createStars() {
+    const starsContainer = document.getElementById('starsContainer');
+    const starCount = 60;
+    
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random properties
+        const size = Math.random() * 3 + 2; // Size between 2-5px
+        const left = Math.random() * 100;
+        const animationDuration = Math.random() * 4 + 3; // 3-7 seconds
+        const animationDelay = Math.random() * 5;
+        
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${left}%`;
+        star.style.animationDuration = `${animationDuration}s`;
+        star.style.animationDelay = `${animationDelay}s`;
+        
+        starsContainer.appendChild(star);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', createStars);
+</script>
+</body>
+</html>

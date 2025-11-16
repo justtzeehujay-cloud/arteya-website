@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artists - Arteya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --pastel-green: #a8e6cf;
+            --pastel-blue: #b8e0f6;
+            --pastel-pink: #ffd3e8;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --text-light: #f5f5f7;
+            --text-muted: #a1a1a6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--dark-card);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 5px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--pastel-green);
+            line-height: 1;
+        }
+
+        .tagline {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--pastel-blue);
+        }
+
+        nav ul li a.active {
+            color: var(--pastel-pink);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--pastel-pink);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after, nav ul li a.active::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--pastel-pink);
+            color: var(--dark-bg);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 60px 0 40px;
+            text-align: center;
+            background-color: var(--dark-card);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Artists Grid */
+        .featured {
+            padding: 80px 0;
+        }
+
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .artist-card {
+            background-color: var(--dark-card);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .artist-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .artist-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .artist-info {
+            padding: 20px;
+        }
+
+        .artist-name {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--pastel-green);
+        }
+
+        .artist-specialty {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .artist-bio {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .view-btn {
+            background-color: var(--pastel-blue);
+            color: var(--dark-bg);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+        }
+
+        .view-btn:hover {
+            background-color: var(--pastel-pink);
+        }
+
+        /* Artist Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: var(--dark-card);
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--pastel-pink);
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--pastel-green);
+        }
+
+        .modal-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .modal-body {
+            line-height: 1.7;
+            color: var(--text-light);
+        }
+
+        .modal-body p {
+            margin-bottom: 15px;
+        }
+
+        .artist-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: var(--dark-bg);
+            border-radius: 10px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--pastel-green);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-card);
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--pastel-green);
+        }
+
+        .footer-column p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--pastel-blue);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--dark-bg);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--pastel-pink);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .brand {
+                margin-bottom: 15px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .modal-content {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            
+            .artist-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+		
+		/* Bright White Falling Stars */
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.star {
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 50%;
+    animation: fall linear infinite;
+    opacity: 0.9;
+    box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.9);
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Make sure content stays above stars */
+header, section, footer {
+    position: relative;
+    z-index: 2;
+}
+
+body {
+    overflow-x: hidden;
+    position: relative;
+}
+    </style>
+</head>
+<body>
+<!-- Star Container -->
+<div class="stars-container" id="starsContainer"></div>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <img src="Picture7.jpg" alt="Arteya Logo" class="logo">
+                    <div class="brand-text">
+                        <a href="index.html" class="brand-name">Arteya</a>
+                        <div class="tagline">Where Your Art Is Born !</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="artists.html" class="active">Artists</a></li>
+                        <li><a href="artworks.html">Artworks</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li class="cart-icon" id="cartIcon">
+                            <a href="checkout.html">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="cart-count" id="cartCount">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Our Talented Artists</h1>
+            <p>Discover the creative minds behind the beautiful artworks in our collection. Each artist brings a unique perspective and style.</p>
+        </div>
+    </section>
+
+    <!-- Artists Grid -->
+    <section class="featured">
+        <div class="container">
+            <div class="artists-grid">
+                <!-- Artist 1 -->
+                <div class="artist-card">
+                    <img src="https://artmag.org/wp-content/uploads/2025/02/Cindy-Sherman-b.-1954.jpg" alt="Cindy Sherman" class="artist-img">
+                    <div class="artist-info">
+                        <h3 class="artist-name">Cindy Sherman</h3>
+                        <p class="artist-specialty">Photography & Conceptual Art</p>
+                        <p class="artist-bio">Renowned for her conceptual portraits that explore identity and social roles through self-transformation.</p>
+                        <button class="view-btn" onclick="showArtistDetail(1)">View Profile</button>
+                    </div>
+                </div>
+                
+                <!-- Artist 2 -->
+                <div class="artist-card">
+                    <img src="https://artmag.org/wp-content/uploads/2024/09/JK.png" alt="Jeff Koons" class="artist-img">
+                    <div class="artist-info">
+                        <h3 class="artist-name">Jeff Koons</h3>
+                        <p class="artist-specialty">Sculpture & Pop Art</p>
+                        <p class="artist-bio">Known for his reproductions of banal objects and controversial explorations of consumer culture.</p>
+                        <button class="view-btn" onclick="showArtistDetail(2)">View Profile</button>
+                    </div>
+                </div>
+                
+                <!-- Artist 3 -->
+                <div class="artist-card">
+                    <img src="https://artmag.org/wp-content/uploads/2024/10/Takashi-Murakami.jpg" alt="Takashi Murakami" class="artist-img">
+                    <div class="artist-info">
+                        <h3 class="artist-name">Takashi Murakami</h3>
+                        <p class="artist-specialty">Superflat Movement & Anime</p>
+                        <p class="artist-bio">Blending fine art with pop culture to create vibrant works that challenge traditional art boundaries.</p>
+                        <button class="view-btn" onclick="showArtistDetail(3)">View Profile</button>
+                    </div>
+                </div>
+                
+                <!-- Artist 4 -->
+                <div class="artist-card">
+                    <img src="https://artmag.org/wp-content/uploads/2024/09/kusama.png" alt="Yayoi Kusama" class="artist-img">
+                    <div class="artist-info">
+                        <h3 class="artist-name">Yayoi Kusama</h3>
+                        <p class="artist-specialty">Installation & Polka Dots</p>
+                        <p class="artist-bio">World-famous for her infinity rooms and obsessive use of polka dots in immersive installations.</p>
+                        <button class="view-btn" onclick="showArtistDetail(4)">View Profile</button>
+                    </div>
+                </div>
+                
+                <!-- Artist 5 -->
+                <div class="artist-card">
+                    <img src="https://www.christies.com/img/LotImages/2008/CKS/2008_CKS_07619_0411_000().jpg" alt="Thomas Ruff" class="artist-img">
+                    <div class="artist-info">
+                        <h3 class="artist-name">Thomas Ruff</h3>
+                        <p class="artist-specialty">Photography & Digital Art</p>
+                        <p class="artist-bio">Pioneering digital manipulation in photography to explore perception and technological mediation.</p>
+                        <button class="view-btn" onclick="showArtistDetail(5)">View Profile</button>
+                    </div>
+                </div>
+                
+                <!-- Artist 6 -->
+                <div class="artist-card">
+                    <img src="https://shop.hauserwirth.com/cdn/shop/files/Maria_Lassnig.jpg?v=1690882225&width=960" alt="Maria Lassnig" class="artist-img">
+                    <div class="artist-info">
+                        <h3 class="artist-name">Maria Lassnig</h3>
+                        <p class="artist-specialty">Body Awareness & Painting</p>
+                        <p class="artist-bio">Known for her "body awareness" paintings that explore physical sensations and self-perception.</p>
+                        <button class="view-btn" onclick="showArtistDetail(6)">View Profile</button>
+                    </div>
+                </div>
+                
+                <!-- Artist 7 -->
+                <div class="artist-card">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Olivia Parker" class="artist-img">
+                    <div class="artist-info">
+                        <h3 class="artist-name">Olivia Parker</h3>
+                        <p class="artist-specialty">Impressionism & Color Theory</p>
+                        <p class="artist-bio">Capturing fleeting moments of light and color with loose brushwork and a vibrant, expressive style.</p>
+                        <button class="view-btn" onclick="showArtistDetail(7)">View Profile</button>
+                    </div>
+                </div>
+                
+                <!-- Artist 8 -->
+                <div class="artist-card">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Daniel Kim" class="artist-img">
+                    <div class="artist-info">
+                        <h3 class="artist-name">Daniel Kim</h3>
+                        <p class="artist-specialty">Digital & Mixed Media</p>
+                        <p class="artist-bio">Pushing boundaries by combining traditional techniques with digital innovation and mixed media approaches.</p>
+                        <button class="view-btn" onclick="showArtistDetail(8)">View Profile</button>
+                    </div>
+                </div>
+                
+                <!-- Artist 9 -->
+                <div class="artist-card">
+                    <img src="https://cdn.theculturetrip.com/wp-content/uploads/2016/02/Marina_Abramovi%C4%87_-_The_Artist_Is_Present_-_Viennale_2012.jpg" alt="Marina Abramović" class="artist-img">
+                    <div class="artist-info">
+                        <h3 class="artist-name">Marina Abramović</h3>
+                        <p class="artist-specialty">Performance Art</p>
+                        <p class="artist-bio">Pioneer of performance art exploring the relationship between performer and audience, body and mind.</p>
+                        <button class="view-btn" onclick="showArtistDetail(9)">View Profile</button>
+                    </div>
+                </div>
+                
+                <!-- Artist 10 -->
+                <div class="artist-card">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Thomas Wright" class="artist-img">
+                    <div class="artist-info">
+                        <h3 class="artist-name">Thomas Wright</h3>
+                        <p class="artist-specialty">Sculpture & 3D Art</p>
+                        <p class="artist-bio">Transforming raw materials into expressive three-dimensional forms that explore space, volume, and texture.</p>
+                        <button class="view-btn" onclick="showArtistDetail(10)">View Profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Artist Detail Modal -->
+    <div class="modal" id="artistModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2 class="modal-title" id="modalTitle">Artist Name</h2>
+            <p class="modal-subtitle" id="modalSubtitle">Specialty</p>
+            
+            <div class="artist-stats" id="artistStats">
+                <!-- Stats will be inserted here -->
+            </div>
+            
+            <div class="modal-body" id="modalBody">
+                <!-- Artist details will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Arteya</h3>
+                    <p>Where your art is born. We provide premium art supplies for passionate creators.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li><a href="artworks.html">Artworks</a></li>
+                        <li><a href="shop.html">Art Supplies</a></li>
+                        <li><a href="#">Brushes</a></li>
+                        <li><a href="#">Paints</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Arteya. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        // Artist detail functionality
+        const modal = document.getElementById('artistModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalSubtitle = document.getElementById('modalSubtitle');
+        const modalBody = document.getElementById('modalBody');
+        const artistStats = document.getElementById('artistStats');
+
+        // Artist data - ALL 10 ARTISTS NOW INCLUDED
+        const artists = {
+            1: {
+                name: "Cindy Sherman",
+                specialty: "Photography & Conceptual Art",
+                stats: {
+                    years: "20+",
+                    exhibitions: "190+",
+                    awards: "15",
+                    artworks: "500+"
+                },
+                content: `
+                    <p><strong>Cindy Sherman</strong> is an American artist whose work consists primarily of photographic self-portraits, depicting herself in many different contexts and as various imagined characters.</p>
+                    
+                    <h3>Artistic Style</h3>
+                    <p>Sherman's work explores the construction of contemporary identity and the nature of representation. Her photographs challenge the viewer's assumptions about gender, identity, and the role of women in society.</p>
+                    
+                    <h3>Notable Series</h3>
+                    <ul>
+                        <li><strong>Untitled Film Stills</strong> (1977-1980) - 70 black-and-white photographs</li>
+                        <li><strong>Centerfolds</strong> (1981) - Horizontal-format images for Artforum</li>
+                        <li><strong>History Portraits</strong> (1988-1990) - Recreating Old Master paintings</li>
+                        <li><strong>Society Portraits</strong> (2008) - Critiquing upper-class women</li>
+                    </ul>
+                    
+                    <h3>Recognition</h3>
+                    <p>Sherman has been the recipient of numerous awards, including a MacArthur Fellowship in 1995. Her work is held in major museum collections worldwide, including the Museum of Modern Art in New York and the Tate Modern in London.</p>
+                `
+            },
+            2: {
+                name: "Jeff Koons",
+                specialty: "Sculpture & Pop Art",
+                stats: {
+                    years: "20+",
+                    exhibitions: "150+",
+                    awards: "12",
+                    artworks: "300+"
+                },
+                content: `
+                    <p><strong>Jeff Koons</strong> is an American artist recognized for his work dealing with popular culture and his sculptures depicting everyday objects.</p>
+                    
+                    <h3>Artistic Philosophy</h3>
+                    <p>Koons's work explores themes of consumerism, taste, and the boundaries between high and low culture. He employs a factory-like production process with numerous assistants to create his highly polished works.</p>
+                    
+                    <h3>Notable Works</h3>
+                    <ul>
+                        <li><strong>Balloon Dog</strong> (1994-2000) - Series of mirror-polished stainless steel sculptures</li>
+                        <li><strong>Rabbit</strong> (1986) - Stainless steel sculpture that became an icon of 1980s contemporary art</li>
+                        <li><strong>Puppy</strong> (1992) - Giant topiary sculpture of a West Highland White Terrier</li>
+                        <li><strong>Celebration Series</strong> - Large-scale works exploring childhood and celebration</li>
+                    </ul>
+                    
+                    <h3>Market Impact</h3>
+                    <p>Koons holds the record for the most expensive work by a living artist sold at auction. His pieces regularly sell for tens of millions of dollars, making him one of the most commercially successful contemporary artists.</p>
+                `
+            },
+            3: {
+                name: "Takashi Murakami",
+                specialty: "Superflat Movement & Anime",
+                stats: {
+                    years: "35+",
+                    exhibitions: "180+",
+                    awards: "18",
+                    artworks: "400+"
+                },
+                content: `
+                    <p><strong>Takashi Murakami</strong> is a Japanese contemporary artist who works in both fine arts and commercial media. He is known for blurring the line between high and low arts.</p>
+                    
+                    <h3>Superflat Theory</h3>
+                    <p>Murakami coined the term "Superflat" to describe both the aesthetic characteristics of Japanese artistic tradition and the nature of post-war Japanese culture and society.</p>
+                    
+                    <h3>Iconic Characters</h3>
+                    <ul>
+                        <li><strong>Mr. DOB</strong> - Murakami's first signature character, a mouse-like figure</li>
+                        <li><strong>Kaikai & Kiki</strong> - Twin characters representing his artistic philosophy</li>
+                        <li><strong>Flower Ball</strong> - Multicolored smiling flowers arranged in spherical patterns</li>
+                        <li><strong>Jellyfish Eyes</strong> - Characters with distinctive eye designs</li>
+                    </ul>
+                    
+                    <h3>Commercial Collaborations</h3>
+                    <p>Murakami has collaborated with numerous brands including Louis Vuitton, Vans, and Supreme. His partnership with Marc Jacobs for Louis Vuitton resulted in one of the most successful artist-fashion collaborations in history.</p>
+                `
+            },
+            4: {
+                name: "Yayoi Kusama",
+                specialty: "Installation & Polka Dots",
+                stats: {
+                    years: "25+",
+                    exhibitions: "300+",
+                    awards: "25",
+                    artworks: "1000+"
+                },
+                content: `
+                    <p><strong>Yayoi Kusama</strong> is a Japanese contemporary artist who works primarily in sculpture and installation, but is also active in painting, performance, film, fashion, poetry, fiction, and other arts.</p>
+                    
+                    <h3>Artistic Vision</h3>
+                    <p>Kusama's work is based in conceptual art and shows some attributes of feminism, minimalism, surrealism, and pop art. She describes herself as an "obsessive artist".</p>
+                    
+                    <h3>Signature Elements</h3>
+                    <ul>
+                        <li><strong>Polka Dots</strong> - Her signature motif representing infinity</li>
+                        <li><strong>Infinity Mirrored Rooms</strong> - Immersive installations with LED lights</li>
+                        <li><strong>Pumpkin Sculptures</strong> - Bright yellow sculptures with black dots</li>
+                        <li><strong>Accumulation</strong> - Works featuring repeated phallic forms</li>
+                    </ul>
+                    
+                    <h3>Global Recognition</h3>
+                    <p>Kusama has been recognized as one of the most important living artists to come out of Japan. Her exhibitions attract millions of visitors worldwide, with people often waiting hours to experience her infinity rooms.</p>
+                `
+            },
+            5: {
+                name: "Thomas Ruff",
+                specialty: "Photography & Digital Art",
+                stats: {
+                    years: "10+",
+                    exhibitions: "120+",
+                    awards: "8",
+                    artworks: "250+"
+                },
+                content: `
+                    <p><strong>Thomas Ruff</strong> is a German photographer who emerged as part of the Düsseldorf School and is known for his large-scale conceptual photography.</p>
+                    
+                    <h3>Technical Innovation</h3>
+                    <p>Ruff is celebrated for his innovative use of digital technology in photography, often manipulating and re-contextualizing found images to explore the nature of perception and representation.</p>
+                    
+                    <h3>Notable Series</h3>
+                    <ul>
+                        <li><strong>Portraits</strong> (1981-1991) - Large-scale passport-style photos</li>
+                        <li><strong>Sterne</strong> (1989-1992) - Astronomical photographs from observatories</li>
+                        <li><strong>Nudes</strong> (1999-2000) - Digitally manipulated pornographic images</li>
+                        <li><strong>jpegs</strong> (2004-2007) - Low-resolution internet images enlarged</li>
+                    </ul>
+                    
+                    <h3>Conceptual Approach</h3>
+                    <p>Ruff's work questions the very nature of photography as a medium, exploring how images are created, distributed, and perceived in the digital age.</p>
+                `
+            },
+            6: {
+                name: "Maria Lassnig",
+                specialty: "Body Awareness & Painting",
+                stats: {
+                    years: "30+",
+                    exhibitions: "180+",
+                    awards: "20",
+                    artworks: "400+"
+                },
+                content: `
+                    <p><strong>Maria Lassnig</strong> was an Austrian artist known for her psychologically charged self-portraits and her theory of "body awareness" painting.</p>
+                    
+                    <h3>Body Awareness Theory</h3>
+                    <p>Lassnig developed a unique approach where she painted only the parts of her body that she could physically feel, creating works that explore internal bodily sensations rather than external appearances.</p>
+                    
+                    <h3>Artistic Evolution</h3>
+                    <ul>
+                        <li><strong>Early Work</strong> - Abstract expressionist influences</li>
+                        <li><strong>Body Awareness</strong> - Focus on physical sensations and self-perception</li>
+                        <li><strong>Animation</strong> - Pioneering work in experimental animation</li>
+                        <li><strong>Late Work</strong> - Bold, expressive self-portraits exploring aging</li>
+                    </ul>
+                    
+                    <h3>Legacy</h3>
+                    <p>Lassnig's work has been increasingly recognized for its profound exploration of the self and the female experience. She received the Golden Lion for lifetime achievement at the 2013 Venice Biennale.</p>
+                `
+            },
+            7: {
+                name: "Olivia Parker",
+                specialty: "Impressionism & Color Theory",
+                stats: {
+                    years: "9+",
+                    exhibitions: "80+",
+                    awards: "6",
+                    artworks: "150+"
+                },
+                content: `
+                    <p><strong>Olivia Parker</strong> is a contemporary painter known for her vibrant, expressive works that capture the fleeting beauty of light and color in everyday scenes.</p>
+                    
+                    <h3>Artistic Approach</h3>
+                    <p>Parker works primarily en plein air, capturing the immediate impression of a scene with loose, energetic brushwork and a sophisticated understanding of color relationships.</p>
+                    
+                    <h3>Signature Techniques</h3>
+                    <ul>
+                        <li><strong>Broken Color</strong> - Applying separate strokes of pure color</li>
+                        <li><strong>Atmospheric Perspective</strong> - Creating depth through color temperature</li>
+                        <li><strong>Dynamic Composition</strong> - Unconventional cropping and viewpoints</li>
+                        <li><strong>Light Studies</strong> - Focus on how light transforms subjects</li>
+                    </ul>
+                    
+                    <h3>Subject Matter</h3>
+                    <p>Parker finds beauty in ordinary moments - from sun-dappled interiors to bustling city streets, transforming everyday scenes into celebrations of light and color.</p>
+                `
+            },
+            8: {
+                name: "Daniel Kim",
+                specialty: "Digital & Mixed Media",
+                stats: {
+                    years: "15+",
+                    exhibitions: "60+",
+                    awards: "4",
+                    artworks: "120+"
+                },
+                content: `
+                    <p><strong>Daniel Kim</strong> is a contemporary artist who bridges traditional art forms with cutting-edge digital technology, creating works that question our relationship with technology and reality.</p>
+                    
+                    <h3>Hybrid Approach</h3>
+                    <p>Kim's practice combines painting, sculpture, digital rendering, and interactive elements to create immersive experiences that challenge conventional artistic categories.</p>
+                    
+                    <h3>Innovative Projects</h3>
+                    <ul>
+                        <li><strong>Digital Palimpsests</strong> - Layered works combining physical and digital marks</li>
+                        <li><strong>Interactive Installations</strong> - Works that respond to viewer presence</li>
+                        <li><strong>Algorithmic Compositions</strong> - Collaborations with AI systems</li>
+                        <li><strong>Mixed Reality</strong> - Blending physical and virtual spaces</li>
+                    </ul>
+                    
+                    <h3>Philosophical Inquiry</h3>
+                    <p>Kim's work explores questions of authenticity, authorship, and the nature of creativity in an increasingly digital world, positioning the artist as both creator and curator of technological processes.</p>
+                `
+            },
+            9: {
+                name: "Marina Abramović",
+                specialty: "Performance Art",
+                stats: {
+                    years: "20+",
+                    exhibitions: "220+",
+                    awards: "30",
+                    artworks: "100+"
+                },
+                content: `
+                    <p><strong>Marina Abramović</strong> is a Serbian performance artist whose work explores the relationship between performer and audience, the limits of the body, and the possibilities of the mind.</p>
+                    
+                    <h3>Performance Philosophy</h3>
+                    <p>Abramović's work often involves pushing her body to its physical and mental limits, creating intense, durational performances that challenge both herself and her audience.</p>
+                    
+                    <h3>Iconic Works</h3>
+                    <ul>
+                        <li><strong>Rhythm 0</strong> (1974) - Allowing audience to use objects on her</li>
+                        <li><strong>The Artist is Present</strong> (2010) - Sitting silently with visitors</li>
+                        <li><strong>The Lovers</strong> (1988) - Walking the Great Wall of China</li>
+                        <li><strong>Balkan Baroque</strong> (1997) - Cleaning bloody bones for days</li>
+                    </ul>
+                    
+                    <h3>Methodology</h3>
+                    <p>Abramović developed what she calls the "Abramović Method" - a series of exercises to prepare both artists and audiences for the experience of performance art, focusing on presence and awareness.</p>
+                `
+            },
+            10: {
+                name: "Thomas Wright",
+                specialty: "Sculpture & 3D Art",
+                stats: {
+                    years: "30+",
+                    exhibitions: "90+",
+                    awards: "7",
+                    artworks: "180+"
+                },
+                content: `
+                    <p><strong>Thomas Wright</strong> is a contemporary sculptor known for his innovative approach to traditional materials and his exploration of form, space, and materiality.</p>
+                    
+                    <h3>Material Exploration</h3>
+                    <p>Wright works with a diverse range of materials including bronze, steel, stone, and found objects, often combining traditional carving techniques with modern fabrication methods.</p>
+                    
+                    <h3>Sculptural Concepts</h3>
+                    <ul>
+                        <li><strong>Negative Space</strong> - Exploring the void as an active element</li>
+                        <li><strong>Material Transformation</strong> - Revealing hidden qualities of materials</li>
+                        <li><strong>Scale and Perception</strong> - Playing with viewer's sense of proportion</li>
+                        <li><strong>Kinetic Elements</strong> - Incorporating movement and balance</li>
+                    </ul>
+                    
+                    <h3>Public Commissions</h3>
+                    <p>Wright has created numerous large-scale public sculptures that engage with their architectural and natural environments, creating dialogues between art, space, and community.</p>
+                `
+            }
+        };
+
+        function showArtistDetail(artistId) {
+            const artist = artists[artistId];
+            
+            if (artist) {
+                modalTitle.textContent = artist.name;
+                modalSubtitle.textContent = artist.specialty;
+                
+                // Set stats
+                artistStats.innerHTML = `
+                    <div class="stat-item">
+                        <div class="stat-number">${artist.stats.years}</div>
+                        <div class="stat-label">Years Active</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">${artist.stats.exhibitions}</div>
+                        <div class="stat-label">Exhibitions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">${artist.stats.awards}</div>
+                        <div class="stat-label">Awards</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">${artist.stats.artworks}</div>
+                        <div class="stat-label">Artworks</div>
+                    </div>
+                `;
+                
+                modalBody.innerHTML = artist.content;
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Close modal when clicking the X
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal when clicking outside the content
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+	
+	<script>
+	// Bright White Falling Stars
+function createStars() {
+    const starsContainer = document.getElementById('starsContainer');
+    const starCount = 60;
+    
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random properties
+        const size = Math.random() * 3 + 2; // Size between 2-5px
+        const left = Math.random() * 100;
+        const animationDuration = Math.random() * 4 + 3; // 3-7 seconds
+        const animationDelay = Math.random() * 5;
+        
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${left}%`;
+        star.style.animationDuration = `${animationDuration}s`;
+        star.style.animationDelay = `${animationDelay}s`;
+        
+        starsContainer.appendChild(star);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', createStars);
+</script>
+</body>
+</html>

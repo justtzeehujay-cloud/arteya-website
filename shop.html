@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Arteya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --pastel-green: #a8e6cf;
+            --pastel-blue: #b8e0f6;
+            --pastel-pink: #ffd3e8;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --text-light: #f5f5f7;
+            --text-muted: #a1a1a6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--dark-card);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 5px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--pastel-green);
+            line-height: 1;
+        }
+
+        .tagline {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--pastel-blue);
+        }
+
+        nav ul li a.active {
+            color: var(--pastel-pink);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--pastel-pink);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after, nav ul li a.active::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--pastel-pink);
+            color: var(--dark-bg);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 60px 0 40px;
+            text-align: center;
+            background-color: var(--dark-card);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Featured Artworks */
+        .featured {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--pastel-green), var(--pastel-blue));
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .artworks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .artwork-card {
+            background-color: var(--dark-card);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .artwork-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .artwork-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .artwork-info {
+            padding: 20px;
+        }
+
+        .artwork-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .artwork-artist {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .artwork-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: 700;
+            color: var(--pastel-green);
+        }
+
+        .buy-btn {
+            background-color: var(--pastel-blue);
+            color: var(--dark-bg);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .buy-btn:hover {
+            background-color: var(--pastel-pink);
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background-color: var(--dark-card);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            transition: right 0.3s ease;
+            z-index: 1001;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--text-muted);
+        }
+
+        .cart-header h2 {
+            color: var(--pastel-green);
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-cart:hover {
+            color: var(--pastel-pink);
+        }
+
+        .cart-items {
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-artist {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-price {
+            color: var(--pastel-green);
+            font-weight: 600;
+        }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .remove-item:hover {
+            color: var(--pastel-pink);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--pastel-pink);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--pastel-pink);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .checkout-btn:hover {
+            background-color: var(--pastel-blue);
+            transform: translateY(-2px);
+        }
+
+        .checkout-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 40px 0;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--pastel-green);
+            color: var(--dark-bg);
+            padding: 15px 25px;
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1002;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-card);
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--pastel-green);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--pastel-blue);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .brand {
+                margin-bottom: 15px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+        }
+        /* Bright White Falling Stars */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: #ffffff;
+            border-radius: 50%;
+            animation: fall linear infinite;
+            opacity: 0.9;
+            box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.9);
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Make sure content stays above stars */
+        header, section, footer {
+            position: relative;
+            z-index: 2;
+        }
+
+        body {
+            overflow-x: hidden;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<!-- Star Container -->
+<div class="stars-container" id="starsContainer"></div>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <img src="Picture7.jpg" alt="Arteya Logo" class="logo">
+                    <div class="brand-text">
+                        <a href="index.html" class="brand-name">Arteya</a>
+                        <div class="tagline">Where Your Art Is Born !</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="artists.html">Artists</a></li>
+                        <li><a href="artworks.html">Artworks</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="shop.html" class="active">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li class="cart-icon" id="cartIcon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cartCount">0</span>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Art Shop</h1>
+            <p>Discover and purchase beautiful artworks from our talented artists. Each piece tells a unique story.</p>
+        </div>
+    </section>
+
+    <!-- Featured Artworks -->
+    <section class="featured">
+        <div class="container">
+            <h2 class="section-title">Available Artworks</h2>
+            <div class="artworks-grid">
+                <!-- Artwork 1 -->
+                <div class="artwork-card">
+                    <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Abstract Art" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Colorful Abstraction</h3>
+                        <p class="artwork-artist">By Elena Rodriguez</p>
+                        <div class="artwork-price">
+                            <span class="price">$450</span>
+                            <button class="buy-btn" data-id="1" data-title="Colorful Abstraction" data-artist="Elena Rodriguez" data-price="450" data-image="https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Artwork 2 -->
+                <div class="artwork-card">
+                    <img src="https://images.saatchiart.com/saatchi/56416/art/12262889/11325087-UYYCHBJG-7.jpg" alt="Landscape Painting" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Water Lilies</h3>
+                        <p class="artwork-artist">By Lilia Orlova-Holme</p>
+                        <div class="artwork-price">
+                            <span class="price">$38,310</span>
+                            <button class="buy-btn" data-id="2" data-title="Water Lilies" data-artist="Lilia Orlova-Holme" data-price="38310" data-image="https://images.saatchiart.com/saatchi/56416/art/12262889/11325087-UYYCHBJG-7.jpg">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Artwork 3 -->
+                <div class="artwork-card">
+                    <img src="https://images.saatchiart.com/saatchi/1059559/art/8602659/7666399-HSC00002-7.jpg" alt="Portrait Art" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Contemplation</h3>
+                        <p class="artwork-artist">By Sophia Chen</p>
+                        <div class="artwork-price">
+                            <span class="price">$520</span>
+                            <button class="buy-btn" data-id="3" data-title="Contemplation" data-artist="Sophia Chen" data-price="520" data-image="https://images.saatchiart.com/saatchi/1059559/art/8602659/7666399-HSC00002-7.jpg">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Artwork 4 -->
+                <div class="artwork-card">
+                    <img src="https://i.pinimg.com/originals/cb/be/87/cbbe875cdbebf7c5ec8916ac1d3d1ab6.jpg" alt="Modern Art" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Ocean Rhythm</h3>
+                        <p class="artwork-artist">By Marcus Johnson</p>
+                        <div class="artwork-price">
+                            <span class="price">$410</span>
+                            <button class="buy-btn" data-id="4" data-title="Ocean Rhythm" data-artist="Marcus Johnson" data-price="410" data-image="https://i.pinimg.com/originals/cb/be/87/cbbe875cdbebf7c5ec8916ac1d3d1ab6.jpg">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Artwork 5 -->
+                <div class="artwork-card">
+                    <img src="https://images.unsplash.com/photo-1578301978162-7aae4d755744?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Digital Art" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Digital Dreams</h3>
+                        <p class="artwork-artist">By Daniel Kim</p>
+                        <div class="artwork-price">
+                            <span class="price">$350</span>
+                            <button class="buy-btn" data-id="5" data-title="Digital Dreams" data-artist="Daniel Kim" data-price="350" data-image="https://images.unsplash.com/photo-1578301978162-7aae4d755744?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Artwork 6 -->
+                <div class="artwork-card">
+                    <img src="https://i.pinimg.com/originals/9b/94/86/9b9486e0ddf39223269e5c22fecafda6.png" alt="Minimalist Art" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Women in Frame</h3>
+                        <p class="artwork-artist">By Alex Turner</p>
+                        <div class="artwork-price">
+                            <span class="price">$290</span>
+                            <button class="buy-btn" data-id="6" data-title="Women in Frame" data-artist="Alex Turner" data-price="290" data-image="https://i.pinimg.com/originals/9b/94/86/9b9486e0ddf39223269e5c22fecafda6.png">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Arteya</h3>
+                    <p>Where Your Art Is Born. Discover and collect exceptional artworks from emerging and established artists.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="artists.html">Artists</a></li>
+                        <li><a href="artworks.html">Artworks</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Pinterest</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Arteya. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <div class="cart-total">
+            <span>Total:</span>
+            <span id="cartTotal">$0.00</span>
+        </div>
+        <a href="checkout.html" class="checkout-btn" id="checkoutBtn">Proceed to Checkout</a>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Cart functionality
+        class ShoppingCart {
+            constructor() {
+                this.items = JSON.parse(localStorage.getItem('cart')) || [];
+                this.updateCartDisplay();
+            }
+
+            addItem(item) {
+                const existingItem = this.items.find(cartItem => cartItem.id === item.id);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    this.items.push({...item, quantity: 1});
+                }
+                this.saveCart();
+                this.updateCartDisplay();
+                this.showToast(`${item.title} added to cart!`);
+            }
+
+            removeItem(itemId) {
+                this.items = this.items.filter(item => item.id !== itemId);
+                this.saveCart();
+                this.updateCartDisplay();
+            }
+
+            getTotal() {
+                return this.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+            }
+
+            getTotalItems() {
+                return this.items.reduce((total, item) => total + item.quantity, 0);
+            }
+
+            saveCart() {
+                localStorage.setItem('cart', JSON.stringify(this.items));
+            }
+
+            updateCartDisplay() {
+                const cartCount = document.getElementById('cartCount');
+                const cartItems = document.getElementById('cartItems');
+                const cartTotal = document.getElementById('cartTotal');
+                const checkoutBtn = document.getElementById('checkoutBtn');
+
+                cartCount.textContent = this.getTotalItems();
+
+                if (this.items.length === 0) {
+                    cartItems.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
+                    checkoutBtn.disabled = true;
+                    checkoutBtn.style.opacity = '0.6';
+                    checkoutBtn.style.pointerEvents = 'none';
+                } else {
+                    cartItems.innerHTML = this.items.map(item => `
+                        <div class="cart-item">
+                            <img src="${item.image}" alt="${item.title}" class="cart-item-img">
+                            <div class="cart-item-details">
+                                <div class="cart-item-title">${item.title}</div>
+                                <div class="cart-item-artist">By ${item.artist}</div>
+                                <div class="cart-item-price">$${item.price.toLocaleString()} x ${item.quantity}</div>
+                            </div>
+                            <button class="remove-item" onclick="cart.removeItem(${item.id})">&times;</button>
+                        </div>
+                    `).join('');
+                    checkoutBtn.disabled = false;
+                    checkoutBtn.style.opacity = '1';
+                    checkoutBtn.style.pointerEvents = 'auto';
+                }
+
+                cartTotal.textContent = `$${this.getTotal().toLocaleString()}`;
+            }
+
+            showToast(message) {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // Initialize cart
+        const cart = new ShoppingCart();
+
+        // DOM Elements
+        const cartIcon = document.getElementById('cartIcon');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const closeCart = document.getElementById('closeCart');
+        const overlay = document.getElementById('overlay');
+
+        // Event Listeners
+        cartIcon.addEventListener('click', () => {
+            cartSidebar.classList.add('active');
+            overlay.classList.add('active');
+        });
+
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            cartSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        // Add to cart buttons
+        document.querySelectorAll('.buy-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const item = {
+                    id: parseInt(e.target.dataset.id),
+                    title: e.target.dataset.title,
+                    artist: e.target.dataset.artist,
+                    price: parseFloat(e.target.dataset.price),
+                    image: e.target.dataset.image
+                };
+                cart.addItem(item);
+            });
+        });
+    </script>
+    
+    <script>
+    // Bright White Falling Stars
+    function createStars() {
+        const starsContainer = document.getElementById('starsContainer');
+        const starCount = 60;
+        
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            // Random properties
+            const size = Math.random() * 3 + 2; // Size between 2-5px
+            const left = Math.random() * 100;
+            const animationDuration = Math.random() * 4 + 3; // 3-7 seconds
+            const animationDelay = Math.random() * 5;
+            
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${left}%`;
+            star.style.animationDuration = `${animationDuration}s`;
+            star.style.animationDelay = `${animationDelay}s`;
+            
+            starsContainer.appendChild(star);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', createStars);
+    </script>
+</body>
+</html>

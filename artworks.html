@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artworks - Arteya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --pastel-green: #a8e6cf;
+            --pastel-blue: #b8e0f6;
+            --pastel-pink: #ffd3e8;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --text-light: #f5f5f7;
+            --text-muted: #a1a1a6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--dark-card);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 5px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--pastel-green);
+            line-height: 1;
+        }
+
+        .tagline {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--pastel-blue);
+        }
+
+        nav ul li a.active {
+            color: var(--pastel-pink);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--pastel-pink);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after, nav ul li a.active::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--pastel-pink);
+            color: var(--dark-bg);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 60px 0 40px;
+            text-align: center;
+            background-color: var(--dark-card);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Artworks Grid */
+        .featured {
+            padding: 80px 0;
+        }
+
+        .artworks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .artwork-card {
+            background-color: var(--dark-card);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .artwork-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .artwork-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .artwork-info {
+            padding: 20px;
+        }
+
+        .artwork-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--pastel-green);
+        }
+
+        .artwork-artist {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .artwork-description {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .artwork-medium {
+            color: var(--pastel-blue);
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+
+        /* Filter Section */
+        .filters {
+            background-color: var(--dark-card);
+            padding: 30px 0;
+            margin-bottom: 40px;
+        }
+
+        .filter-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--pastel-pink);
+            color: var(--dark-bg);
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            background-color: var(--dark-bg);
+            border: 1px solid var(--text-muted);
+            color: var(--text-light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            width: 200px;
+        }
+
+        .search-box button {
+            background-color: var(--pastel-blue);
+            color: var(--dark-bg);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-card);
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--pastel-green);
+        }
+
+        .footer-column p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--pastel-blue);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--dark-bg);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--pastel-pink);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .brand {
+                margin-bottom: 15px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            .filter-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+        }
+		
+		/* Bright White Falling Stars */
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.star {
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 50%;
+    animation: fall linear infinite;
+    opacity: 0.9;
+    box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.9);
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Make sure content stays above stars */
+header, section, footer {
+    position: relative;
+    z-index: 2;
+}
+
+body {
+    overflow-x: hidden;
+    position: relative;
+}
+    </style>
+</head>
+<body>
+<!-- Star Container -->
+<div class="stars-container" id="starsContainer"></div>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <img src="Picture7.jpg" alt="Arteya Logo" class="logo">
+                    <div class="brand-text">
+                        <a href="index.html" class="brand-name">Arteya</a>
+                        <div class="tagline">Where Your Art Is Born !</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="artists.html">Artists</a></li>
+                        <li><a href="artworks.html" class="active">Artworks</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li class="cart-icon" id="cartIcon">
+                            <a href="checkout.html">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="cart-count" id="cartCount">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Artwork Collection</h1>
+            <p>Browse our extensive collection of unique artworks. From abstract to realism, explore these beautiful pieces for inspiration.</p>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters">
+        <div class="container">
+            <div class="filter-content">
+                <div class="filter-group">
+                    <button class="filter-btn active">All</button>
+                    <button class="filter-btn">Abstract</button>
+                    <button class="filter-btn">Portrait</button>
+                    <button class="filter-btn">Landscape</button>
+                    <button class="filter-btn">Digital</button>
+                </div>
+                <div class="search-box">
+                    <input type="text" placeholder="Search artworks...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Artworks Grid -->
+    <section class="featured">
+        <div class="container">
+            <div class="artworks-grid">
+                <!-- Artwork 1 -->
+                <div class="artwork-card" data-category="abstract">
+                    <img src="https://images.saatchiart.com/saatchi/720911/art/10797721/9860181-UABHGGYH-7.jpg" alt="Abstract Art" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Colorful Abstraction</h3>
+                        <p class="artwork-artist">By Elena Rodriguez</p>
+                        <p class="artwork-description">A vibrant exploration of color and form that captures the energy of urban life through abstract expressionism.</p>
+                        <p class="artwork-medium">Acrylic on canvas</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 2 -->
+                <div class="artwork-card" data-category="landscape">
+                    <img src="https://images.saatchiart.com/saatchi/56416/art/12262889/11325087-UYYCHBJG-7.jpg" alt="Landscape Painting" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Water Lilies</h3>
+                        <p class="artwork-artist">By Lilia Orlova-Holme</p>
+                        <p class="artwork-description">A serene depiction of water lilies floating peacefully on a tranquil pond, capturing the essence of nature's beauty.</p>
+                        <p class="artwork-medium">Oil on canvas</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 3 -->
+                <div class="artwork-card" data-category="portrait">
+                    <img src="https://images.saatchiart.com/saatchi/338603/art/9698427/8761527-UJWYAQMK-7.jpg" alt="Portrait Art" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Contemplation</h3>
+                        <p class="artwork-artist">By Félix Hemme</p>
+                        <p class="artwork-description">An intimate portrait capturing a moment of deep reflection and inner peace.</p>
+                        <p class="artwork-medium">Charcoal and graphite</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 4 -->
+                <div class="artwork-card" data-category="portrait">
+                    <img src="https://images.saatchiart.com/saatchi/781688/art/9558433/8621535-KRFPTXWN-7.jpg" alt="Modern Art" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Image Face</h3>
+                        <p class="artwork-artist">By Marcus Johnson</p>
+                        <p class="artwork-description">A contemporary exploration of identity and perception through fragmented imagery.</p>
+                        <p class="artwork-medium">Mixed media collage</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 5 -->
+                <div class="artwork-card" data-category="digital">
+                    <img src="https://images.saatchiart.com/saatchi/750261/art/11133205/10195481-MZNGPNTT-7.jpg" alt="Digital Art" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Up Painting</h3>
+                        <p class="artwork-artist">By Daniel Kim</p>
+                        <p class="artwork-description">A dynamic digital composition exploring upward movement and positive energy.</p>
+                        <p class="artwork-medium">Digital art print</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 6 -->
+                <div class="artwork-card" data-category="abstract">
+                    <img src="https://images.saatchiart.com/saatchi/2012243/art/10280843/9343467-WLHPSVYD-7.jpg" alt="Minimalist Art" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Minimalist Artwork With Stripes</h3>
+                        <p class="artwork-artist">By Alex Turner</p>
+                        <p class="artwork-description">Clean lines and balanced composition create a sense of harmony and simplicity.</p>
+                        <p class="artwork-medium">Acrylic on wood panel</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 7 -->
+                <div class="artwork-card" data-category="abstract">
+                    <img src="https://images.saatchiart.com/saatchi/2333113/art/12969247/12031395-GOHQJLJN-7.jpg" alt="Surreal Art" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Dreamscape</h3>
+                        <p class="artwork-artist">By Isabella Martinez</p>
+                        <p class="artwork-description">A surreal journey through the subconscious mind, blending reality and fantasy.</p>
+                        <p class="artwork-medium">Oil and acrylic on canvas</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 8 -->
+                <div class="artwork-card" data-category="landscape">
+                    <img src="https://images.saatchiart.com/saatchi/398176/art/1939445/1063264-HSC00002-7.jpg" alt="Impressionist Art" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">The Waiting Place</h3>
+                        <p class="artwork-artist">By Carles Azcon Jutgla</p>
+                        <p class="artwork-description">An impressionistic landscape capturing the quiet anticipation of a moment yet to come.</p>
+                        <p class="artwork-medium">Oil on canvas</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 9 -->
+                <div class="artwork-card" data-category="abstract">
+                    <img src="https://images.saatchiart.com/saatchi/1613841/art/9420321/8483429-WWTCLBMF-7.jpg" alt="Textile Art" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Textile Art</h3>
+                        <p class="artwork-artist">By Maya Patel</p>
+                        <p class="artwork-description">Traditional weaving techniques meet contemporary design in this tactile artwork.</p>
+                        <p class="artwork-medium">Handwoven textiles</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 10 -->
+                <div class="artwork-card" data-category="landscape">
+                    <img src="https://images.saatchiart.com/saatchi/1532567/art/8638197/7701861-FIDJBWDZ-7.jpg" alt="Sculpture" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Tulip Symphony</h3>
+                        <p class="artwork-artist">By Sana Askari</p>
+                        <p class="artwork-description">A delicate ceramic sculpture celebrating the beauty and fragility of nature.</p>
+                        <p class="artwork-medium">Ceramic sculpture</p>
+                    </div>
+                </div>
+                
+                <!-- NEW ARTWORKS -->
+                
+                <!-- Artwork 11 -->
+                <div class="artwork-card" data-category="digital">
+                    <img src="https://preview.redd.it/ai-please-graphically-represent-if-i-could-high-to-kolob-v0-hkds4apyqf0b1.jpg?width=1280&format=pjpg&auto=webp&s=fe82361e361b0d15e28f5506993cb8a9f148f913" alt="Digital Landscape" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Digital Horizon</h3>
+                        <p class="artwork-artist">By Ryan Chen</p>
+                        <p class="artwork-description">A futuristic landscape blending natural elements with digital aesthetics.</p>
+                        <p class="artwork-medium">Digital art</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 12 -->
+                <div class="artwork-card" data-category="landscape">
+                    <img src="https://i.pinimg.com/736x/f8/66/84/f866843cac72059f4ccdddfe920bc3d7.jpg" alt="Mountain Landscape" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Mountain Majesty</h3>
+                        <p class="artwork-artist">By Sophia Williams</p>
+                        <p class="artwork-description">Capturing the grandeur and timeless beauty of mountain ranges at sunrise.</p>
+                        <p class="artwork-medium">Watercolor on paper</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 13 -->
+                <div class="artwork-card" data-category="digital">
+                    <img src="https://mir-s3-cdn-cf.behance.net/projects/404/8298b3132697189.Y3JvcCwxNzcwLDEzODUsNjEzLDA.jpeg" alt="Digital Portrait" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Digital Portrait</h3>
+                        <p class="artwork-artist">By Liam O'Connor</p>
+                        <p class="artwork-description">A contemporary digital portrait repreasent colours true technology.</p>
+                        <p class="artwork-medium">Digital illustration</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 14 -->
+                <div class="artwork-card" data-category="portrait">
+                    <img src="https://i.pinimg.com/originals/4b/28/74/4b2874de4d98d0b90ed2ff8273f0b99a.jpg" alt="Classic Portrait" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Classic Portrait</h3>
+                        <p class="artwork-artist">By Emma Thompson</p>
+                        <p class="artwork-description">A traditional portrait capturing the dignity and character of the subject.</p>
+                        <p class="artwork-medium">Oil on canvas</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 15 -->
+                <div class="artwork-card" data-category="abstract">
+                    <img src="https://imagedelivery.net/0ObHXyjKhN5YJrtuYFSvjQ/i-52fec250-3a6c-4cf9-b7a8-fcc64526f7d9-original-mixed-media-abstract-ocean-painting-under-water-textured-marine-art-seaside-studios-uk/display" alt="Abstract Expression" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Abstract Ocean Expression</h3>
+                        <p class="artwork-artist">By Noah Garcia</p>
+                        <p class="artwork-description">Bold colors and dynamic brushstrokes convey raw emotion and energy of the ocean.</p>
+                        <p class="artwork-medium">Mixed media on canvas</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 16 -->
+                <div class="artwork-card" data-category="landscape">
+                    <img src="https://i.pinimg.com/736x/f7/d3/20/f7d320361d6dc5ed2663598db87f1ab5--easy-paintings-beautiful-paintings.jpg" alt="Coastal Landscape" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Magical Landscape</h3>
+                        <p class="artwork-artist">By Ava Rodriguez</p>
+                        <p class="artwork-description">The meeting of nature and colours captured in soft, atmospheric tones.</p>
+                        <p class="artwork-medium">Pastel on paper</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 17 -->
+                <div class="artwork-card" data-category="digital">
+                    <img src="https://cdnb.artstation.com/p/assets/images/images/057/029/119/large/artgentle-30.jpg?1670638894" alt="Digital Fantasy" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">Digital Fantasy</h3>
+                        <p class="artwork-artist">By Ethan Brown</p>
+                        <p class="artwork-description">An imaginative digital creation blending reality with fantasy elements.</p>
+                        <p class="artwork-medium">Digital art</p>
+                    </div>
+                </div>
+                
+                <!-- Artwork 18 -->
+                <div class="artwork-card" data-category="portrait">
+                    <img src="https://www.thisiscolossal.com/wp-content/uploads/2014/07/image-960x717.jpeg" alt="Modern Portrait" class="artwork-img">
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">African Wildflower</h3>
+                        <p class="artwork-artist">By Olivia Davis</p>
+                        <p class="artwork-description">A contemporary approach to portraiture with geometric elements and modern sensibility.</p>
+                        <p class="artwork-medium">Acrylic and ink on canvas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Arteya</h3>
+                    <p>Where your art is born. We provide premium art supplies for passionate creators.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li><a href="artworks.html">Artworks</a></li>
+                        <li><a href="shop.html">Art Supplies</a></li>
+                        <li><a href="#">Brushes</a></li>
+                        <li><a href="#">Paints</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Arteya. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const artworkCards = document.querySelectorAll('.artwork-card');
+        const searchInput = document.querySelector('.search-box input');
+        const searchButton = document.querySelector('.search-box button');
+        
+        // Filter by category
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const filterValue = this.textContent.toLowerCase();
+                
+                // Show/hide artwork cards based on filter
+                artworkCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    
+                    if (filterValue === 'all' || category === filterValue) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Search functionality
+        searchButton.addEventListener('click', function() {
+            performSearch();
+        });
+        
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        
+        function performSearch() {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            if (searchTerm === '') {
+                // If search is empty, show all artworks
+                artworkCards.forEach(card => {
+                    card.style.display = 'block';
+                });
+                return;
+            }
+            
+            artworkCards.forEach(card => {
+                const artworkTitle = card.querySelector('.artwork-title').textContent.toLowerCase();
+                const artworkArtist = card.querySelector('.artwork-artist').textContent.toLowerCase();
+                const artworkText = artworkTitle + ' ' + artworkArtist;
+                
+                if (artworkText.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+	
+	<script>
+	// Bright White Falling Stars
+function createStars() {
+    const starsContainer = document.getElementById('starsContainer');
+    const starCount = 60;
+    
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random properties
+        const size = Math.random() * 3 + 2; // Size between 2-5px
+        const left = Math.random() * 100;
+        const animationDuration = Math.random() * 4 + 3; // 3-7 seconds
+        const animationDelay = Math.random() * 5;
+        
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${left}%`;
+        star.style.animationDuration = `${animationDuration}s`;
+        star.style.animationDelay = `${animationDelay}s`;
+        
+        starsContainer.appendChild(star);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', createStars);
+</script>
+</body>
+</html>
